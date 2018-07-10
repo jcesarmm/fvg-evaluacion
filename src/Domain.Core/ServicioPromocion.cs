@@ -8,16 +8,22 @@ using System.Text;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net.Http;
+using Moq;
 
 namespace Promociones.Domain.Core
 {
     public class ServicioPromocion : Servicio<Promocion>, IServicioPromocion
     {
-        IRepositorioPromocion repositorioPromocion;
-        public ServicioPromocion(IRepositorioPromocion repositorioPromocion)
+        private IRepositorioPromocion repositorioPromocion;
+        private IServicioMedioPago servicioMedioPago;
+        private IServicioProductoCategoria servicioProductoCategoria;
+
+        public ServicioPromocion(IRepositorioPromocion repositorioPromocion, IServicioMedioPago servicioMedioPago, IServicioProductoCategoria servicioProductoCategoria)
             : base(repositorioPromocion)
         {
             this.repositorioPromocion = repositorioPromocion;
+            this.servicioMedioPago = servicioMedioPago;
+            this.servicioProductoCategoria = servicioProductoCategoria;
         }
 
         public override async void Insertar(Promocion entidad)
@@ -33,36 +39,12 @@ namespace Promociones.Domain.Core
 
         private async Task<bool> CategoriaProductoValido(List<int> list)
         {
-            foreach (var idCatProducto in list)
-            {
-                HttpResponseMessage response = null;
-                using (var httpClient = new HttpClient())
-                {
-                    response = await httpClient.GetAsync(string.Format("http://xxx.xxx.xx/producto/categorias/", idCatProducto));
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        return false;
-                    }
-                }
-            }
-            return true;
+            return await servicioProductoCategoria.ValidarCategoriasProducto(list);
         }
 
         private async Task<bool> MedioPagoValido(List<int> list)
         {
-            foreach (var idMedioPago in list)
-            {
-                HttpResponseMessage response = null;
-                using (var httpClient = new HttpClient())
-                {
-                    response = await httpClient.GetAsync(string.Format("http://xxx.xxx.xx/mediodepago/", idMedioPago));
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        return false;
-                    }
-                }
-            }
-            return true;
+            return await servicioMedioPago.ValidarMediosPago(list);
         }
 
         private bool ExisteDuplicidad(List<int> idTipoMediosPago, DateTime fechaInicio, DateTime fechaFin)

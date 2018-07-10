@@ -1,8 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Promociones.Domain.Entities
+﻿namespace Promociones.Domain.Entities
 {
-    [Table("PromocionesTiposMedioPago")]
+    
     public class PromocionTipoMedioPago
     {
         public int PromocionId { get; set; }

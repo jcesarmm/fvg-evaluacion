@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Promociones.Domain.Entities;
+using Promociones.Infrastructure;
 
-namespace Promociones.Domain.Entities.Migrations
+namespace Promociones.Infrastructure.Migrations
 {
     [DbContext(typeof(PromocionContext))]
-    partial class PromocionContextModelSnapshot : ModelSnapshot
+    [Migration("20180710211346_InitialModel")]
+    partial class InitialModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -164,7 +166,7 @@ namespace Promociones.Domain.Entities.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Promociones.Domain.Entities.Promocion")
-                        .WithMany("EntidadFinancieraId")
+                        .WithMany("PromocionEntidadesFinancieras")
                         .HasForeignKey("PromocionId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -177,7 +179,7 @@ namespace Promociones.Domain.Entities.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Promociones.Domain.Entities.Promocion")
-                        .WithMany("MedioPagoId")
+                        .WithMany("PromocionMediosPago")
                         .HasForeignKey("PromocionId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -190,7 +192,7 @@ namespace Promociones.Domain.Entities.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Promociones.Domain.Entities.Promocion")
-                        .WithMany("ProductoCategoriaIds")
+                        .WithMany("PromocionProductoCategorias")
                         .HasForeignKey("PromocionId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -198,7 +200,7 @@ namespace Promociones.Domain.Entities.Migrations
             modelBuilder.Entity("Promociones.Domain.Entities.PromocionTipoMedioPago", b =>
                 {
                     b.HasOne("Promociones.Domain.Entities.Promocion")
-                        .WithMany("PromocionTipoMedioPagoId")
+                        .WithMany("PromocionTiposMedioPago")
                         .HasForeignKey("PromocionId")
                         .OnDelete(DeleteBehavior.Cascade);
 

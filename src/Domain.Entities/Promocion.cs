@@ -1,13 +1,11 @@
 ﻿using Promociones.Domain.Entities.Common;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 
 namespace Promociones.Domain.Entities
 {
-    [Table("Promociones")]
     public class Promocion : EntidadAuditable
     {
         public Promocion()
@@ -17,14 +15,14 @@ namespace Promociones.Domain.Entities
             PromocionTiposMedioPago = new List<PromocionTipoMedioPago>();
             PromocionProductoCategorias = new List<PromocionProductoCategoria>();
         }
-        public Promocion(/*int[] tipoMedioPagoId, int[] entidadFinancieraId, int[] medioPagoId,*/ int? maxCantidadDeCuotas, /*int[] productoCategoriaIds,*/
-            decimal? porcentajeDecuento, bool activo)
+        public Promocion(int id, int? maxCantidadDeCuotas,decimal? porcentajeDecuento, bool activo, List<PromocionEntidadFinanciera>  promocionEntidadesFinancieras,
+            List<PromocionMedioPago> promocionMediosPago, List<PromocionTipoMedioPago> promocionTiposMedioPago, List<PromocionProductoCategoria> promocionProductoCategorias)
         {
-            //TipoMedioPagoId = tipoMedioPagoId;
-            //EntidadFinancieraId = entidadFinancieraId;
-            //MedioPagoId = medioPagoId;
+            PromocionTiposMedioPago = promocionTiposMedioPago;
+            PromocionEntidadesFinancieras = promocionEntidadesFinancieras;
+            PromocionMediosPago = promocionMediosPago;
+            PromocionProductoCategorias = promocionProductoCategorias;
             MaxCantidadDeCuotas = maxCantidadDeCuotas;
-            //ProductoCategoriaIds = productoCategoriaIds;
             PorcentajeDecuento = porcentajeDecuento;
             Activo = activo;
         }
