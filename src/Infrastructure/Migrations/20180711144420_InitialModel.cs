@@ -175,6 +175,46 @@ namespace Promociones.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Categorias",
+                columns: new[] { "Id", "Descripcion" },
+                values: new object[,]
+                {
+                    { 1, "Categoria 1" },
+                    { 2, "Categoria 2" },
+                    { 3, "Categoria 3" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "EntidadesFinancieras",
+                columns: new[] { "Id", "Descripcion" },
+                values: new object[,]
+                {
+                    { 1, "Banco Galicia" },
+                    { 2, "Banco Rio" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "MediosPago",
+                columns: new[] { "Id", "Descripcion" },
+                values: new object[,]
+                {
+                    { 1, "Tarjeta Visa Galicia Gold" },
+                    { 2, "Tarjeta Amex Frances Platinium" },
+                    { 3, "Efectivo Pesos" },
+                    { 4, "Efectivo Dollar" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "TiposMedioPago",
+                columns: new[] { "Id", "Descripcion" },
+                values: new object[,]
+                {
+                    { 1, "Visa" },
+                    { 2, "Amex" },
+                    { 3, "Efectivo" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_PromocionesEntidadesFinancieras_EntidadFinancieraId",
                 table: "PromocionesEntidadesFinancieras",

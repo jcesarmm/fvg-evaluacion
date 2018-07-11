@@ -38,6 +38,27 @@ namespace Promociones.Infrastructure
 
             modelBuilder.Entity<PromocionProductoCategoria>()
                 .HasKey(promocionproductocategoria => new { promocionproductocategoria.PromocionId, promocionproductocategoria.CategoriaId });
+
+
+            modelBuilder.Entity<TipoMedioPago>().HasData(
+                new { Id = 1, Descripcion = "Visa" },
+                new { Id = 2, Descripcion = "Amex" },
+            new { Id = 3, Descripcion = "Efectivo" });
+
+            modelBuilder.Entity<EntidadFinanciera>().HasData(
+                new { Id = 1, Descripcion = "Banco Galicia" },
+                new { Id = 2, Descripcion = "Banco Rio" });
+
+            modelBuilder.Entity<MedioPago>().HasData(
+                new { Id = 1, Descripcion = "Tarjeta Visa Galicia Gold" },
+                new { Id = 2, Descripcion = "Tarjeta Amex Frances Platinium" },
+            new { Id = 3, Descripcion = "Efectivo Pesos" },
+            new { Id = 4, Descripcion = "Efectivo Dollar" });
+
+            modelBuilder.Entity<Categoria>().HasData(
+                new { Id = 1, Descripcion = "Categoria 1" },
+                new { Id = 2, Descripcion = "Categoria 2" },
+            new { Id = 3, Descripcion = "Categoria 3" });
         }
 
         public DbSet<Promocion> Promociones { get; set; }

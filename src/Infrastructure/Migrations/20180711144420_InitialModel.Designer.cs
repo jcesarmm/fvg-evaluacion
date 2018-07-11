@@ -10,7 +10,7 @@ using Promociones.Infrastructure;
 namespace Promociones.Infrastructure.Migrations
 {
     [DbContext(typeof(PromocionContext))]
-    [Migration("20180710211346_InitialModel")]
+    [Migration("20180711144420_InitialModel")]
     partial class InitialModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,6 +34,12 @@ namespace Promociones.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categorias");
+
+                    b.HasData(
+                        new { Id = 1, Descripcion = "Categoria 1" },
+                        new { Id = 2, Descripcion = "Categoria 2" },
+                        new { Id = 3, Descripcion = "Categoria 3" }
+                    );
                 });
 
             modelBuilder.Entity("Promociones.Domain.Entities.EntidadFinanciera", b =>
@@ -49,6 +55,11 @@ namespace Promociones.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("EntidadesFinancieras");
+
+                    b.HasData(
+                        new { Id = 1, Descripcion = "Banco Galicia" },
+                        new { Id = 2, Descripcion = "Banco Rio" }
+                    );
                 });
 
             modelBuilder.Entity("Promociones.Domain.Entities.MedioPago", b =>
@@ -64,6 +75,13 @@ namespace Promociones.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("MediosPago");
+
+                    b.HasData(
+                        new { Id = 1, Descripcion = "Tarjeta Visa Galicia Gold" },
+                        new { Id = 2, Descripcion = "Tarjeta Amex Frances Platinium" },
+                        new { Id = 3, Descripcion = "Efectivo Pesos" },
+                        new { Id = 4, Descripcion = "Efectivo Dollar" }
+                    );
                 });
 
             modelBuilder.Entity("Promociones.Domain.Entities.Promocion", b =>
@@ -156,6 +174,12 @@ namespace Promociones.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TiposMedioPago");
+
+                    b.HasData(
+                        new { Id = 1, Descripcion = "Visa" },
+                        new { Id = 2, Descripcion = "Amex" },
+                        new { Id = 3, Descripcion = "Efectivo" }
+                    );
                 });
 
             modelBuilder.Entity("Promociones.Domain.Entities.PromocionEntidadFinanciera", b =>
