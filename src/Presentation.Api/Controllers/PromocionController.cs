@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Promociones.Domain.Core;
+using Promociones.Domain.Core.DTO;
 using Promociones.Domain.Entities;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -55,7 +56,9 @@ namespace Promociones.Presentation.Api.Controllers
         [HttpGet("{idMedioPago:int}/{idTipoMedioPago:int}/{idEntidadFinanciera:int}/{cantCuotas:int}/{idCatProd:int}")]
         public IEnumerable<Promocion> Get(int idMedioPago, int idTipoMedioPago, int idEntidadFinanciera, int cantCuotas, int idCatProd)
         {
-            return servicioPromocion.ObtenerTodosVigentesVenta(idMedioPago, idTipoMedioPago, idEntidadFinanciera, cantCuotas, idCatProd);
+            PromocionDTO promocionDTO = new PromocionDTO(idMedioPago, idTipoMedioPago, idEntidadFinanciera, cantCuotas, idCatProd);
+
+            return servicioPromocion.ObtenerTodosVigentesVenta(promocionDTO);
         }
 
 

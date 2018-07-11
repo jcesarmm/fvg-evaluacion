@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Net.Http;
 using Moq;
+using Promociones.Domain.Core.DTO;
 
 namespace Promociones.Domain.Core
 {
@@ -65,13 +66,13 @@ namespace Promociones.Domain.Core
             return repositorioPromocion.Buscar(promo => promo.FechaInicio >= fecha && promo.FechaFin <= fecha.Date.AddDays(1));
         }
 
-        public IEnumerable<Promocion> ObtenerTodosVigentesVenta(int idMedioPago, int idTipoMedioPago, int idEntidadFinanciera, int cantCuotas, int idCatProd)
+        public IEnumerable<Promocion> ObtenerTodosVigentesVenta(PromocionDTO promocionDTO)
         {
-            return repositorioPromocion.Buscar(promo => promo.PromocionMediosPago.Select(mediopago => mediopago.MedioPagoId).Contains(idMedioPago) &&
-            promo.PromocionTiposMedioPago.Select(tipomediopago => tipomediopago.TipoMedioPagoId).Contains(idTipoMedioPago) &&
-            promo.PromocionEntidadesFinancieras.Select(entidadfinanciera => entidadfinanciera.EntidadFinancieraId).Contains(idEntidadFinanciera) &&
-            promo.PromocionProductoCategorias.Select(productocategoria => productocategoria.CategoriaId).Contains(idCatProd) &&
-            promo.MaxCantidadDeCuotas == cantCuotas &&
+            return repositorioPromocion.Buscar(promo => promo.PromocionMediosPago.Select(mediopago => mediopago.MedioPagoId).Contains(promocionDTO.IdMedioPago) &&
+            promo.PromocionTiposMedioPago.Select(tipomediopago => tipomediopago.TipoMedioPagoId).Contains(promocionDTO.IdTipoMedioPago) &&
+            promo.PromocionEntidadesFinancieras.Select(entidadfinanciera => entidadfinanciera.EntidadFinancieraId).Contains(promocionDTO.IdEntidadFinanciera) &&
+            promo.PromocionProductoCategorias.Select(productocategoria => productocategoria.CategoriaId).Contains(promocionDTO.IdCatProd) &&
+            promo.MaxCantidadDeCuotas == promocionDTO.CantCuotas &&
             promo.FechaInicio <= DateTime.Now.Date && promo.FechaFin >= DateTime.Now.Date.AddDays(1));
         }
 

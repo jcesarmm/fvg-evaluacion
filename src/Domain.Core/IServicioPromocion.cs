@@ -1,4 +1,5 @@
 ﻿using Promociones.Domain.Core.Common;
+using Promociones.Domain.Core.DTO;
 using Promociones.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace Promociones.Domain.Core
     {
         IEnumerable<Promocion> ObtenerTodosVigentes();
         IEnumerable<Promocion> ObtenerTodosVigentesFecha(DateTime fecha);
-        IEnumerable<Promocion> ObtenerTodosVigentesVenta(int idMedioPago, int idTipoMedioPago, int idEntidadFinanciera, int cantCuotas, int idCatProd);
+        IEnumerable<Promocion> ObtenerTodosVigentesVenta(PromocionDTO promocionDTO);
         bool ValidarPromocionVigente(int id);
     }
 }
