@@ -12,6 +12,7 @@ using Promociones.Domain.Entities;
 namespace Promociones.Presentation.Api.Controllers
 {
     [Route("api/[controller]")]
+    [ApiVersion("1.0")]
     public class PromocionController : Controller
     {
         private IServicioPromocion servicioPromocion;
@@ -27,7 +28,7 @@ namespace Promociones.Presentation.Api.Controllers
         /// <param name="vigentes">True: unicamente promociones vigentes, False: todas las promociones.</param>
         /// <returns>Listado de promociones</returns>
         [HttpGet("{vigentes:bool}")]
-        public IEnumerable<Promocion> Get(bool vigentes = false)
+        public IEnumerable<Promocion> Get([FromQuery]bool vigentes = false)
         {
             if (vigentes)
                 return servicioPromocion.ObtenerTodosVigentes();
@@ -40,7 +41,7 @@ namespace Promociones.Presentation.Api.Controllers
         /// <param name="fecha">fecha</param>
         /// <returns>Lista Promciones</returns>
         [HttpGet("{fecha:datetime}")]
-        public IEnumerable<Promocion> Get(DateTime fecha)
+        public IEnumerable<Promocion> Get([FromQuery]DateTime fecha)
         {
             return servicioPromocion.ObtenerTodosVigentesFecha(fecha);
         }
@@ -54,7 +55,7 @@ namespace Promociones.Presentation.Api.Controllers
         /// <param name="idCatProd">Id categoria producto</param>
         /// <returns></returns>
         [HttpGet("{idMedioPago:int}/{idTipoMedioPago:int}/{idEntidadFinanciera:int}/{cantCuotas:int}/{idCatProd:int}")]
-        public IEnumerable<Promocion> Get(int idMedioPago, int idTipoMedioPago, int idEntidadFinanciera, int cantCuotas, int idCatProd)
+        public IEnumerable<Promocion> Get([FromQuery]int idMedioPago, [FromQuery]int idTipoMedioPago, [FromQuery]int idEntidadFinanciera, [FromQuery]int cantCuotas, [FromQuery]int idCatProd)
         {
             PromocionDTO promocionDTO = new PromocionDTO(idMedioPago, idTipoMedioPago, idEntidadFinanciera, cantCuotas, idCatProd);
 
@@ -68,28 +69,28 @@ namespace Promociones.Presentation.Api.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public bool Get(int id)
+        public bool Get([FromQuery]int id)
         {
             return servicioPromocion.ValidarPromocionVigente(id);
         }
 
         // POST api/<controller>
         [HttpPost]
-        public void Post(Promocion promocion)
+        public void Post([FromBody]Promocion promocion)
         {
             servicioPromocion.Insertar(promocion);
         }
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
-        public void Put(int id, Promocion promocion)
+        public void Put([FromQuery]int id, [FromBody]Promocion promocion)
         {
             servicioPromocion.Actualizar(promocion);
         }
 
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void Delete([FromQuery]int id)
         {
             servicioPromocion.Eliminar(id);
         }

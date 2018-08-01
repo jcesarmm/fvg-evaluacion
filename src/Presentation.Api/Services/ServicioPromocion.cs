@@ -1,7 +1,6 @@
 ﻿using Promociones.Domain.Core.Common;
 using Promociones.Domain.Entities;
 using Promociones.Infrastructure;
-using Promociones.Infrastructure.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,10 +9,11 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using Moq;
 using Promociones.Domain.Core.DTO;
+using Promociones.Domain.Core;
 
-namespace Promociones.Domain.Core
+namespace Promociones.Presentation.Api.Services
 {
-    public class ServicioPromocion : Servicio<Promocion>, IServicioPromocion
+    public class ServicioPromocion : ServicioBase<Promocion>, IServicioPromocion
     {
         private IRepositorioPromocion repositorioPromocion;
         private IServicioMedioPago servicioMedioPago;
