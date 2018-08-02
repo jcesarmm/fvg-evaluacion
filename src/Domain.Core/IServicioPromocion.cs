@@ -1,4 +1,5 @@
-﻿using Promociones.Domain.Core.Common;
+﻿using MongoDB.Bson;
+using Promociones.Domain.Core.Common;
 using Promociones.Domain.Core.DTO;
 using Promociones.Domain.Entities;
 using System;

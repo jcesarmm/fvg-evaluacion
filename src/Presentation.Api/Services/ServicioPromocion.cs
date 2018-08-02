@@ -10,6 +10,7 @@ using System.Net.Http;
 using Moq;
 using Promociones.Domain.Core.DTO;
 using Promociones.Domain.Core;
+using MongoDB.Bson;
 
 namespace Promociones.Presentation.Api.Services
 {
@@ -29,26 +30,26 @@ namespace Promociones.Presentation.Api.Services
 
         public override async void Insertar(Promocion entidad)
         {
-            if (ExisteDuplicidad(entidad.ObtenerTipoMediosPagoId(), entidad.FechaInicio, entidad.FechaFin))
+            if (ExisteDuplicidad(entidad.MedioPagoId, entidad.FechaInicio, entidad.FechaFin))
                 throw new Exception("Existe otra promoción dentro de las mismas fechas");
-            if (!await MedioPagoValido(entidad.ObtenerMediosPagoId()))
+            if (!await MedioPagoValido(entidad.MedioPagoId))
                 throw new Exception("El medio de pago no es válido");
-            if (!await CategoriaProductoValido(entidad.ObtenerCategoriaIds()))
+            if (!await CategoriaProductoValido(entidad.ProductoCategoriaIds))
                 throw new Exception("Categoria de producto no válida");
             base.Insertar(entidad);
         }
 
-        private async Task<bool> CategoriaProductoValido(List<int> list)
+        private async Task<bool> CategoriaProductoValido(int[] list)
         {
             return await servicioProductoCategoria.ValidarCategoriasProducto(list);
         }
 
-        private async Task<bool> MedioPagoValido(List<int> list)
+        private async Task<bool> MedioPagoValido(int[] list)
         {
             return await servicioMedioPago.ValidarMediosPago(list);
         }
 
-        private bool ExisteDuplicidad(List<int> idTipoMediosPago, DateTime fechaInicio, DateTime fechaFin)
+        private bool ExisteDuplicidad(int[] idTipoMediosPago, DateTime fechaInicio, DateTime fechaFin)
         {
             return repositorioPromocion.Buscar(promo => (promo.FechaInicio <= fechaInicio && promo.FechaFin >= fechaFin) ||
             promo.FechaInicio >= fechaInicio && promo.FechaFin >= fechaFin ||
@@ -68,10 +69,10 @@ namespace Promociones.Presentation.Api.Services
 
         public IEnumerable<Promocion> ObtenerTodosVigentesVenta(PromocionDTO promocionDTO)
         {
-            return repositorioPromocion.Buscar(promo => promo.PromocionMediosPago.Select(mediopago => mediopago.MedioPagoId).Contains(promocionDTO.IdMedioPago) &&
-            promo.PromocionTiposMedioPago.Select(tipomediopago => tipomediopago.TipoMedioPagoId).Contains(promocionDTO.IdTipoMedioPago) &&
-            promo.PromocionEntidadesFinancieras.Select(entidadfinanciera => entidadfinanciera.EntidadFinancieraId).Contains(promocionDTO.IdEntidadFinanciera) &&
-            promo.PromocionProductoCategorias.Select(productocategoria => productocategoria.CategoriaId).Contains(promocionDTO.IdCatProd) &&
+            return repositorioPromocion.Buscar(promo => promo.MedioPagoId.Contains(promocionDTO.IdMedioPago) &&
+            promo.TipoMedioPagoId.Contains(promocionDTO.IdTipoMedioPago) &&
+            promo.EntidadFinancieraId.Contains(promocionDTO.IdEntidadFinanciera) &&
+            promo.ProductoCategoriaIds.Contains(promocionDTO.IdCatProd) &&
             promo.MaxCantidadDeCuotas == promocionDTO.CantCuotas &&
             promo.FechaInicio <= DateTime.Now.Date && promo.FechaFin >= DateTime.Now.Date.AddDays(1));
         }

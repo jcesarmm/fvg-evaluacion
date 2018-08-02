@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MongoDB.Driver;
 using Promociones.Domain.Entities;
 using Promociones.Infrastructure.Common;
 using System;
@@ -7,9 +8,9 @@ using System.Text;
 
 namespace Promociones.Infrastructure
 {
-    public class RepositorioPromocion : RepositorioGenerico<Promocion>, IRepositorioPromocion
+    public class RepositorioPromocion : RepositorioGenericoMongoDB<Promocion>, IRepositorioPromocion
     {
-        public RepositorioPromocion(DbContext context) : base(context)
+        public RepositorioPromocion(IMongoClient mongoClient) : base(mongoClient)
         {
         }
     }

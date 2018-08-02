@@ -6,4 +6,19 @@
     <RootNamespace>Promociones.Domain.Entities</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Categoria.cs" />
+    <Compile Remove="EntidadFinanciera.cs" />
+    <Compile Remove="MedioPago.cs" />
+    <Compile Remove="PromocionEntidadFinanciera.cs" />
+    <Compile Remove="PromocionMedioPago.cs" />
+    <Compile Remove="PromocionProductoCategoria.cs" />
+    <Compile Remove="PromocionTipoMedioPago.cs" />
+    <Compile Remove="TipoMedioPago.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="mongocsharpdriver" Version="2.7.0" />
+  </ItemGroup>
+
 </Project>

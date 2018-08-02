@@ -8,12 +8,12 @@ using System.Text;
 
 namespace Promociones.Infrastructure.Common
 {
-    public abstract class RepositorioGenerico<T> : IRepositorioGenerico<T> where T : Entidad
+    public abstract class RepositorioGenericoSQL<T> : IRepositorioGenerico<T> where T : Entidad
     {
         protected DbContext context;
         protected readonly DbSet<T> dbset;
 
-        public RepositorioGenerico(DbContext context)
+        public RepositorioGenericoSQL(DbContext context)
         {
             this.context = context;
             dbset = context.Set<T>();
@@ -46,6 +46,11 @@ namespace Promociones.Infrastructure.Common
         public int GuardarCambios()
         {
             return context.SaveChanges();
+        }
+
+        public T ObtenerPorId(int id)
+        {
+            return context.Find<T>(id);
         }
     }
 }

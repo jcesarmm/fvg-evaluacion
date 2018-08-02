@@ -61,11 +61,11 @@ namespace Promociones.Presentation.Api
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
 
-            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
-            {
-                var context = serviceScope.ServiceProvider.GetRequiredService<PromocionContext>();
-                context.Database.Migrate();
-            }
+            //using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            //{
+            //    var context = serviceScope.ServiceProvider.GetRequiredService<PromocionContext>();
+            //    context.Database.Migrate();
+            //}
 
             if (env.IsDevelopment())
             {
@@ -77,10 +77,10 @@ namespace Promociones.Presentation.Api
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Promotions Web Api V1");
             });
-            app.Run(async (context) =>
-            {
-                await context.Response.WriteAsync("Hello World!");
-            });
+            //app.Run(async (context) =>
+            //{
+            //    await context.Response.WriteAsync("Hello World!");
+            //});
         }
     }
 }

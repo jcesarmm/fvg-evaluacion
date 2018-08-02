@@ -5,6 +5,7 @@ using System.Text;
 using System.Linq;
 using Promociones.Domain.Core.Common;
 using Promociones.Infrastructure.Common;
+using MongoDB.Bson;
 
 namespace Promociones.Presentation.Api.Services
 {
@@ -20,7 +21,6 @@ namespace Promociones.Presentation.Api.Services
         public virtual void Actualizar(T entidad)
         {
             repositorioGenerico.Actualizar(entidad);
-            repositorioGenerico.GuardarCambios();
         }
 
         public virtual void Eliminar(int id)
@@ -29,14 +29,17 @@ namespace Promociones.Presentation.Api.Services
             if (entidad != null)
             {
                 repositorioGenerico.Eliminar(entidad);
-                repositorioGenerico.GuardarCambios();
             }
         }
 
         public virtual void Insertar(T entidad)
         {
             repositorioGenerico.Insertar(entidad);
-            repositorioGenerico.GuardarCambios();
+        }
+
+        public T ObtenerPorId(int id)
+        {
+            return repositorioGenerico.ObtenerPorId(id);
         }
 
         public virtual IEnumerable<T> ObtenerTodos()

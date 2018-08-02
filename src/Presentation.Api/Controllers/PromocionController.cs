@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 using Promociones.Domain.Core;
 using Promociones.Domain.Core.DTO;
 using Promociones.Domain.Entities;
@@ -12,7 +13,7 @@ using Promociones.Domain.Entities;
 namespace Promociones.Presentation.Api.Controllers
 {
     [Route("api/[controller]")]
-    [ApiVersion("1.0")]
+    //[ApiVersion("1.0")]
     public class PromocionController : Controller
     {
         private IServicioPromocion servicioPromocion;
@@ -28,7 +29,7 @@ namespace Promociones.Presentation.Api.Controllers
         /// <param name="vigentes">True: unicamente promociones vigentes, False: todas las promociones.</param>
         /// <returns>Listado de promociones</returns>
         [HttpGet("{vigentes:bool}")]
-        public IEnumerable<Promocion> Get([FromQuery]bool vigentes = false)
+        public IEnumerable<Promocion> Get([FromRoute]bool vigentes = false)
         {
             if (vigentes)
                 return servicioPromocion.ObtenerTodosVigentes();
@@ -41,7 +42,7 @@ namespace Promociones.Presentation.Api.Controllers
         /// <param name="fecha">fecha</param>
         /// <returns>Lista Promciones</returns>
         [HttpGet("{fecha:datetime}")]
-        public IEnumerable<Promocion> Get([FromQuery]DateTime fecha)
+        public IEnumerable<Promocion> Get([FromRoute]DateTime fecha)
         {
             return servicioPromocion.ObtenerTodosVigentesFecha(fecha);
         }
@@ -55,7 +56,7 @@ namespace Promociones.Presentation.Api.Controllers
         /// <param name="idCatProd">Id categoria producto</param>
         /// <returns></returns>
         [HttpGet("{idMedioPago:int}/{idTipoMedioPago:int}/{idEntidadFinanciera:int}/{cantCuotas:int}/{idCatProd:int}")]
-        public IEnumerable<Promocion> Get([FromQuery]int idMedioPago, [FromQuery]int idTipoMedioPago, [FromQuery]int idEntidadFinanciera, [FromQuery]int cantCuotas, [FromQuery]int idCatProd)
+        public IEnumerable<Promocion> Get([FromRoute]int idMedioPago, [FromRoute]int idTipoMedioPago, [FromRoute]int idEntidadFinanciera, [FromRoute]int cantCuotas, [FromRoute]int idCatProd)
         {
             PromocionDTO promocionDTO = new PromocionDTO(idMedioPago, idTipoMedioPago, idEntidadFinanciera, cantCuotas, idCatProd);
 
@@ -69,9 +70,10 @@ namespace Promociones.Presentation.Api.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public bool Get([FromQuery]int id)
+        public bool Get([FromRoute]int id)
         {
             return servicioPromocion.ValidarPromocionVigente(id);
+            //return servicioPromocion.ObtenerPorId(id);
         }
 
         // POST api/<controller>
@@ -83,14 +85,14 @@ namespace Promociones.Presentation.Api.Controllers
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
-        public void Put([FromQuery]int id, [FromBody]Promocion promocion)
+        public void Put([FromRoute]int id, [FromBody]Promocion promocion)
         {
             servicioPromocion.Actualizar(promocion);
         }
 
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
-        public void Delete([FromQuery]int id)
+        public void Delete([FromRoute]int id)
         {
             servicioPromocion.Eliminar(id);
         }

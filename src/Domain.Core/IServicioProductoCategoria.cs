@@ -7,6 +7,6 @@ namespace Promociones.Domain.Core
 {
     public interface IServicioProductoCategoria
     {
-        Task<bool> ValidarCategoriasProducto(List<int> idsMediosPago);
+        Task<bool> ValidarCategoriasProducto(int[] idsMediosPago);
     }
 }
