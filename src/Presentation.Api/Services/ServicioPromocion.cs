@@ -54,8 +54,8 @@ namespace Promociones.Presentation.Api.Services
         private bool ExisteDuplicidad(int[] idTipoMediosPago, DateTime fechaInicio, DateTime fechaFin)
         {
             return repositorioPromocion.Buscar(promo => (promo.FechaInicio <= fechaInicio && promo.FechaFin >= fechaFin) ||
-            promo.FechaInicio <= fechaInicio && promo.FechaFin >= fechaInicio ||
-            promo.FechaInicio >= fechaInicio && promo.FechaFin <= fechaFin).Any();
+            (promo.FechaInicio >= fechaInicio && (promo.FechaInicio <= fechaFin && promo.FechaFin >= fechaFin)) ||
+            (promo.FechaFin > fechaInicio && promo.FechaFin < fechaFin)).Any();
         }
 
         public IEnumerable<Promocion> ObtenerTodosVigentes()
