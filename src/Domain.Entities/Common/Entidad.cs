@@ -7,6 +7,6 @@ namespace Promociones.Domain.Entities.Common
 {
     public abstract class Entidad : IEntidad
     {
-        public int Id { get; set; }
+        public object Id { get; set; }
     }
 }

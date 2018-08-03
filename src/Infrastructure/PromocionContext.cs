@@ -17,7 +17,7 @@ namespace Promociones.Infrastructure
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Promocion>().ToTable("Promociones");
+            //modelBuilder.Entity<Promocion>().ToTable("Promociones");
             //modelBuilder.Entity<MedioPago>().ToTable("MediosPago");
             //modelBuilder.Entity<EntidadFinanciera>().ToTable("EntidadesFinancieras");
             //modelBuilder.Entity<TipoMedioPago>().ToTable("TiposMedioPago");
@@ -61,7 +61,7 @@ namespace Promociones.Infrastructure
             //new { Id = 3, Descripcion = "Categoria 3" });
         }
 
-        public DbSet<Promocion> Promociones { get; set; }
+        //public DbSet<Promocion> Promociones { get; set; }
         //public DbSet<MedioPago> MediosPago { get; set; }
 
         //public DbSet<EntidadFinanciera> EntidadesFinancieras { get; set; }

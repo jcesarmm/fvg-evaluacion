@@ -13,6 +13,6 @@ namespace Promociones.Domain.Core
         IEnumerable<Promocion> ObtenerTodosVigentes();
         IEnumerable<Promocion> ObtenerTodosVigentesFecha(DateTime fecha);
         IEnumerable<Promocion> ObtenerTodosVigentesVenta(PromocionDTO promocionDTO);
-        bool ValidarPromocionVigente(int id);
+        bool ValidarPromocionVigente(object id);
     }
 }

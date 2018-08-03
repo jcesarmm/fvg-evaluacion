@@ -66,7 +66,7 @@ namespace Promociones.Infrastructure.Common
             throw new NotImplementedException();
         }
 
-        public T ObtenerPorId(int id)
+        public T ObtenerPorId(object id)
         {
             return _collection.Find(f => f.Id == id).FirstOrDefault();
         }

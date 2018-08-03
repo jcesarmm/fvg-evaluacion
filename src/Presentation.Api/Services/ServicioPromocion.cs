@@ -11,6 +11,7 @@ using Moq;
 using Promociones.Domain.Core.DTO;
 using Promociones.Domain.Core;
 using MongoDB.Bson;
+using System.ComponentModel.DataAnnotations;
 
 namespace Promociones.Presentation.Api.Services
 {
@@ -28,15 +29,16 @@ namespace Promociones.Presentation.Api.Services
             this.servicioProductoCategoria = servicioProductoCategoria;
         }
 
-        public override async void Insertar(Promocion entidad)
+        public override async Task<string> Insertar(Promocion entidad)
         {
             if (ExisteDuplicidad(entidad.MedioPagoId, entidad.FechaInicio, entidad.FechaFin))
                 throw new Exception("Existe otra promoción dentro de las mismas fechas");
             if (!await MedioPagoValido(entidad.MedioPagoId))
-                throw new Exception("El medio de pago no es válido");
+                throw new ValidationException("El medio de pago no es válido");
             if (!await CategoriaProductoValido(entidad.ProductoCategoriaIds))
-                throw new Exception("Categoria de producto no válida");
-            base.Insertar(entidad);
+                throw new ValidationException("Categoria de producto no válida");
+            await base.Insertar(entidad);
+            return "Ok";
         }
 
         private async Task<bool> CategoriaProductoValido(int[] list)
@@ -77,7 +79,7 @@ namespace Promociones.Presentation.Api.Services
             promo.FechaInicio <= DateTime.Now.Date && promo.FechaFin >= DateTime.Now.Date.AddDays(1));
         }
 
-        public bool ValidarPromocionVigente(int id)
+        public bool ValidarPromocionVigente(object id)
         {
             Promocion promocion = repositorioPromocion.Buscar(promo => promo.Id == id).FirstOrDefault();
             if (promocion != null)

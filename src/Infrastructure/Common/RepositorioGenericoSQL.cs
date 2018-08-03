@@ -48,7 +48,7 @@ namespace Promociones.Infrastructure.Common
             return context.SaveChanges();
         }
 
-        public T ObtenerPorId(int id)
+        public T ObtenerPorId(object id)
         {
             return context.Find<T>(id);
         }

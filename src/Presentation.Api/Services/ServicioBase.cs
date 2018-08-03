@@ -6,6 +6,7 @@ using System.Linq;
 using Promociones.Domain.Core.Common;
 using Promociones.Infrastructure.Common;
 using MongoDB.Bson;
+using System.Threading.Tasks;
 
 namespace Promociones.Presentation.Api.Services
 {
@@ -23,7 +24,7 @@ namespace Promociones.Presentation.Api.Services
             repositorioGenerico.Actualizar(entidad);
         }
 
-        public virtual void Eliminar(int id)
+        public virtual void Eliminar(object id)
         {
             var entidad = repositorioGenerico.Buscar(t => t.Id == id).FirstOrDefault();
             if (entidad != null)
@@ -32,12 +33,13 @@ namespace Promociones.Presentation.Api.Services
             }
         }
 
-        public virtual void Insertar(T entidad)
+        public virtual Task<string> Insertar(T entidad)
         {
             repositorioGenerico.Insertar(entidad);
+            return Task.FromResult("Ok");
         }
 
-        public T ObtenerPorId(int id)
+        public virtual T ObtenerPorId(object id)
         {
             return repositorioGenerico.ObtenerPorId(id);
         }

@@ -3,20 +3,21 @@ using Promociones.Domain.Entities.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Promociones.Domain.Core.Common
 {
     public interface IServicio<T> where T : Entidad
     {
-        void Insertar(T entidad);
+        Task<string> Insertar(T entidad);
 
-        T ObtenerPorId(int id);
+        T ObtenerPorId(object id);
 
         IEnumerable<T> ObtenerTodos();
 
         void Actualizar(T entidad);
 
-        void Eliminar(int id);
+        void Eliminar(object id);
 
     }
 }

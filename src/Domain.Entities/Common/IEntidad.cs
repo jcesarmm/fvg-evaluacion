@@ -9,6 +9,6 @@ namespace Promociones.Domain.Entities.Common
     public interface IEntidad
     {
         [BsonId]
-        int Id { get; set; }
+        object Id { get; set; }
     }
 }

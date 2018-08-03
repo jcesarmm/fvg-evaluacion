@@ -16,6 +16,6 @@ namespace Promociones.Infrastructure.Common
         void Actualizar(T entity);
 
         int GuardarCambios();
-        T ObtenerPorId(int id);
+        T ObtenerPorId(object id);
     }
 }

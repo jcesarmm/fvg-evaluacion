@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using Promociones.Domain.Core;
@@ -13,7 +15,7 @@ using Promociones.Domain.Entities;
 namespace Promociones.Presentation.Api.Controllers
 {
     [Route("api/[controller]")]
-    //[ApiVersion("1.0")]
+    [ApiVersion("1.0")]
     public class PromocionController : Controller
     {
         private IServicioPromocion servicioPromocion;
@@ -73,14 +75,26 @@ namespace Promociones.Presentation.Api.Controllers
         public bool Get([FromRoute]int id)
         {
             return servicioPromocion.ValidarPromocionVigente(id);
-            //return servicioPromocion.ObtenerPorId(id);
         }
 
         // POST api/<controller>
         [HttpPost]
-        public void Post([FromBody]Promocion promocion)
+        public async Task<IActionResult> Post([FromBody]Promocion promocion)
         {
-            servicioPromocion.Insertar(promocion);
+            try
+            {
+                await servicioPromocion.Insertar(promocion);
+                return StatusCode(StatusCodes.Status200OK);
+            }
+            catch(ValidationException ve)
+            {
+                return StatusCode(406, ve.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(406, ex.Message);
+            }
+
         }
 
         // PUT api/<controller>/5
